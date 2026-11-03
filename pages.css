@@ -228,6 +228,8 @@
   .pg__title, .nf__title { font-size: 30px; line-height: 38px; }
 }
 
+/* Samsung Internet's dark mode darkens backgrounds and lightens text, and the page can't detect it; a gradient clipped to text counts as a background and turns dark navy on dark, so Samsung gets a plain text colour */
+html.ua-samsung .pg__accent, html.ua-samsung .ab-pillars b { background: none; color: #3b6cf0; -webkit-text-fill-color: #3b6cf0; }
 /* forced-dark:start: generated from the rules above, only when the browser forces a dark theme (see the forced-dark script in each page head) */
 html.forced-dark .pg__hero { background: radial-gradient(60% 60% at 85% 0%, rgba(33,40,79,0.45), transparent 70%), radial-gradient(50% 50% at 0% 100%, rgba(26,31,62,0.7), transparent 70%), linear-gradient(180deg, #131c2e, #0d1626 60%, #111b2c); box-shadow: inset 0 0 0 1px rgba(175,195,255,0.075); }
 html.forced-dark .pg__hero::before { background: radial-gradient(circle at 1px 1px, rgba(20,36,107,0.09) 1px, transparent 0) 0 0 / 24px 24px; }
