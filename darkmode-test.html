@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Dark mode test</title>
+  <!-- Temporary diagnostic page: what does Samsung Internet's dark mode report and change?
+       ?cs=<value> adds <meta name="color-scheme" content="<value>"> at parse time, e.g. ?cs=dark, ?cs=light%20dark, ?cs=only%20light -->
+  <script>(function () { var v = new URLSearchParams(location.search).get('cs'); if (v) document.write('<meta name="color-scheme" content="' + v.replace(/[^a-z ]/gi, '') + '">'); })();</script>
+  <style>
+    body { margin: 0; padding: 16px; background: #ffffff; color: #111111; font: 15px/1.45 system-ui, sans-serif; }
+    h1 { font-size: 20px; margin: 0 0 4px; }
+    h2 { font-size: 16px; margin: 24px 0 8px; }
+    p { margin: 0 0 8px; }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    td { border-top: 1px solid #dddddd; padding: 6px 4px; vertical-align: top; word-break: break-word; }
+    td:first-child { width: 42%; color: #555555; }
+    .sw { display: flex; align-items: center; gap: 10px; margin: 6px 0; }
+    .sw i { width: 56px; height: 32px; border: 1px solid #999999; flex: none; }
+    .links a { display: inline-block; margin: 0 8px 8px 0; padding: 6px 10px; border: 1px solid #999999; border-radius: 6px; color: #111111; text-decoration: none; }
+    .links a.on { background: #111111; color: #ffffff; }
+    button { font: inherit; padding: 10px 14px; border-radius: 8px; border: 1px solid #111111; background: #ffffff; color: #111111; }
+    pre { white-space: pre-wrap; font-size: 12px; background: #f3f3f3; padding: 8px; }
+    .dark-probe { display: none; }
+    @media (prefers-color-scheme: dark) { .dark-probe { display: block; } }
+  </style>
+</head>
+<body>
+  <h1>Dark mode test</h1>
+  <p>Open this page with the browser's dark mode on, then off. Screenshot it each time, or tap "Copy results" and send the text.</p>
+
+  <h2>Meta color-scheme variant</h2>
+  <div class="links" id="links"></div>
+
+  <h2>What the browser reports</h2>
+  <table id="out"></table>
+  <p class="dark-probe"><b>CSS sees prefers-color-scheme: dark</b> (this line is shown only by a CSS media query)</p>
+
+  <h2>Reference colours</h2>
+  <p>Each swatch is painted in the colour named next to it. If dark mode changes them, the swatch won't match its label.</p>
+  <div id="swatches"></div>
+
+  <h2>Results</h2>
+  <button id="copy" type="button">Copy results</button>
+  <pre id="txt"></pre>
+
+  <script>
+  (function () {
+    var cs = new URLSearchParams(location.search).get('cs') || '';
+    var variants = [['', 'none'], ['light', 'light'], ['dark', 'dark'], ['light dark', 'light dark'], ['only light', 'only light']];
+    document.getElementById('links').innerHTML = variants.map(function (v) {
+      return '<a href="?' + (v[0] ? 'cs=' + encodeURIComponent(v[0]) : '') + '"' + (v[0] === cs ? ' class="on"' : '') + '>' + v[1] + '</a>';
+    }).join('');
+
+    var swatches = [['#ffffff', 'white (page background)'], ['#111111', 'near-black (text)'], ['#062150', 'navy (brand / light-site button)'], ['#3b6cf0', 'blue'], ['#dbe4f9', 'pale blue (dark-site button)'], ['#9db4ee', 'light blue (dark-site accent)']];
+    document.getElementById('swatches').innerHTML = swatches.map(function (s) {
+      return '<div class="sw"><i style="background:' + s[0] + '"></i><span>' + s[0] + ': ' + s[1] + '</span></div>';
+    }).join('');
+
+    function canvasColour(scheme) {
+      var d = document.createElement('div');
+      d.style.cssText = 'display:none;background-color:canvas;' + (scheme ? 'color-scheme:' + scheme : '');
+      document.documentElement.appendChild(d);
+      var c = getComputedStyle(d).backgroundColor; d.remove(); return c;
+    }
+    function mq(q) { try { return matchMedia(q).matches; } catch (e) { return 'error'; } }
+
+    function rows() {
+      var r = [
+        ['URL', location.href],
+        ['User agent', navigator.userAgent],
+        ['Meta color-scheme on page', (document.querySelector('meta[name=color-scheme]') || {}).content || '(none)'],
+        ['prefers-color-scheme: dark', mq('(prefers-color-scheme: dark)')],
+        ['prefers-color-scheme: light', mq('(prefers-color-scheme: light)')],
+        ['forced-colors: active', mq('(forced-colors: active)')],
+        ['inverted-colors: inverted', mq('(inverted-colors: inverted)')],
+        ['canvas colour, color-scheme:light (site check)', canvasColour('light')],
+        ['canvas colour, no color-scheme', canvasColour('')],
+        ['Computed body background', getComputedStyle(document.body).backgroundColor],
+        ['Computed html color-scheme', getComputedStyle(document.documentElement).colorScheme || '(unsupported)'],
+        ['Time', new Date().toISOString()]
+      ];
+      if (/SamsungBrowser/i.test(navigator.userAgent)) r.splice(2, 0, ['Samsung Internet version', (navigator.userAgent.match(/SamsungBrowser\/([\d.]+)/) || [])[1]]);
+      return r;
+    }
+    function esc(s) { return String(s).replace(/[&<>]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]; }); }
+    function render() {
+      var r = rows();
+      document.getElementById('out').innerHTML = r.map(function (x) { return '<tr><td>' + esc(x[0]) + '</td><td>' + esc(x[1]) + '</td></tr>'; }).join('');
+      document.getElementById('txt').textContent = r.map(function (x) { return x[0] + ': ' + x[1]; }).join('\n');
+    }
+    render();
+    try { matchMedia('(prefers-color-scheme: dark)').addEventListener('change', render); } catch (e) {}
+
+    document.getElementById('copy').addEventListener('click', function () {
+      var t = document.getElementById('txt').textContent, b = this;
+      (navigator.clipboard ? navigator.clipboard.writeText(t) : Promise.reject()).then(function () { b.textContent = 'Copied'; }, function () {
+        var range = document.createRange(); range.selectNodeContents(document.getElementById('txt'));
+        var s = getSelection(); s.removeAllRanges(); s.addRange(range); b.textContent = 'Selected, copy it manually';
+      });
+    });
+  })();
+  </script>
+</body>
+</html>
