@@ -150,8 +150,6 @@
   .dh .dna-core span { animation: none; }
 }
 
-/* Samsung Internet's dark mode darkens backgrounds and lightens text, and the page can't detect it; a gradient clipped to text counts as a background and turns dark navy on dark, so Samsung gets a plain text colour */
-html.ua-samsung .dh .pillar__title, html.ua-samsung .dh__accent { background: none; color: #3b6cf0; -webkit-text-fill-color: #3b6cf0; }
 /* forced-dark:start: generated from the rules above, only when the browser forces a dark theme (see the forced-dark script in each page head) */
 html.forced-dark .dh { background: radial-gradient(60% 50% at 85% 0%, rgba(33,40,79,0.45), transparent 70%), radial-gradient(50% 40% at 0% 100%, rgba(26,31,62,0.7), transparent 70%), linear-gradient(180deg, #131c2e, #0d1626 60%, #111b2c); box-shadow: inset 0 0 0 1px rgba(175,195,255,0.075); --grad-a: #8db0fb; --brand: #dbe4f9; }
 html.forced-dark .dh .pillar__title, html.forced-dark .dh__accent { background: none; color: #9db4ee; -webkit-text-fill-color: #9db4ee; }
