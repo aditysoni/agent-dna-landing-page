@@ -1,0 +1,143 @@
+/* ---------- Report a vulnerability (security.html, vuln.js): the report form, one step at a time, then the policy ---------- */
+.vr { max-width: 1440px; margin: 0 auto; padding: 0 88px 40px; }
+.vr svg { fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.vr__head { padding: 72px 0 40px; text-align: center; }
+.vr__head .pg__lede { margin-left: auto; margin-right: auto; }
+.vr__kicker { display: inline-flex; align-items: center; gap: 8px; font: 500 12px/16px var(--mono); letter-spacing: .08em; text-transform: uppercase; color: #3b6cf0; }
+.vr__kicker svg { width: 16px; height: 16px; }
+.vr__title { margin: 16px 0 0; font-size: 48px; font-weight: 400; line-height: 56px; letter-spacing: -.02em; color: var(--ink); }
+.vr__body { display: grid; grid-template-columns: minmax(0, 640px); justify-content: center; }
+
+/* the disclosure policy, below the form */
+.vr__policy { max-width: 760px; margin: 96px auto 0; padding-top: 48px; border-top: 1px solid rgba(6,33,80,.1); }
+.vr__policy .vr__policy-title { counter-increment: none; display: block; margin: 0 0 32px; font: 500 12px/16px var(--mono); letter-spacing: .08em; text-transform: uppercase; color: #6b778c; } /* a label, outside the numbered sections */
+.vr__policy .vr__policy-title::before { content: none; }
+.vr__policy section { scroll-margin-top: 104px; }
+.vr__policy code { padding: 1px 6px; border-radius: 5px; background: #f1f3f6; font: 13px var(--mono); color: var(--navy); }
+
+/* ---------- the form ---------- */
+.vf { scroll-margin-top: 96px; display: flex; flex-direction: column; gap: 16px; padding: 32px; border-radius: 20px; background: #fff; box-shadow: 0 0 0 1px rgba(6,33,80,.08), 0 40px 80px -40px rgba(20,36,107,.35); }
+.vf[hidden] { display: none; }
+.vf__step { display: none; flex-direction: column; gap: 16px; margin: 0; padding: 0; border: 0; min-width: 0; }
+.vf__step.is-on { display: flex; animation: demo-rise .45s cubic-bezier(.16,1,.3,1) both; }
+.vf__step legend { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; } /* the stepper shows it; kept for screen readers */
+.vf__row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+/* a text box grows into the step's spare room, so no step leaves a gap above the buttons */
+.vf__step .field:has(textarea) { flex: 1; }
+.vf__step .field textarea { flex: 1; resize: none; }
+.vf__hint { margin: -6px 0 0; font-size: 13px; line-height: 18px; color: #8a94a6; }
+.vf__agree { display: grid; grid-template-columns: 18px minmax(0, 1fr); gap: 10px; align-items: start; font-size: 14px; line-height: 20px; color: #3a4a66; cursor: pointer; }
+.vf__agree input { width: 18px; height: 18px; margin: 1px 0 0; accent-color: var(--navy); }
+.vf__agree a { color: var(--navy); text-decoration: underline; text-underline-offset: 3px; }
+.vf__agree .field__err { grid-column: 2; }
+.vf__step .vf__agree { margin-top: auto; } /* the last thing before Send report */
+/* stepper and progress */
+.vf__steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin: 0; padding: 0; list-style: none; counter-reset: st; }
+.vf__steps li { counter-increment: st; display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 500; line-height: 16px; color: #a3abba; white-space: nowrap; }
+.vf__steps li::before { content: counter(st); display: grid; place-items: center; flex: none; width: 22px; height: 22px; border-radius: 50%; background: #eef1f6; font: 500 12px var(--mono); color: #8a94a6; }
+.vf__steps li.is-on { color: var(--ink); }
+.vf__steps li.is-on::before { background: var(--navy); color: #fff; }
+.vf__steps li.is-done::before { content: "✓"; background: #e9f9f0; color: #1a7a48; }
+.vf__bar { height: 3px; border-radius: 2px; background: #eef1f6; overflow: hidden; }
+.vf__bar b { display: block; height: 100%; background: var(--navy); transform: scaleX(var(--p, .25)); transform-origin: left; transition: transform .4s cubic-bezier(.16,1,.3,1); }
+/* from tablet up the card keeps one size: every step sits in the same cell, so it is as tall as the tallest
+   step and only the fields inside change (hidden steps keep their space but can't be seen or focused) */
+@media (min-width: 721px) {
+  .vf { display: grid; grid-template-columns: minmax(0, 1fr); }
+  .vf__steps { grid-row: 1; } .vf__bar { grid-row: 2; } .vf__nav { grid-row: 4; } .vf__note { grid-row: 5; }
+  .vf__step { display: flex; grid-row: 3; grid-column: 1; visibility: hidden; }
+  .vf__step.is-on { visibility: visible; }
+}
+/* Back / Continue / Send */
+.vf__nav { display: flex; gap: 12px; margin-top: 4px; }
+.vf__nav .btn { height: 48px; padding-top: 0; padding-bottom: 0; }
+.vf__nav .btn--primary { flex: 1; box-shadow: inset 0 1px 0 rgba(255,255,255,.12); }
+.vf__nav .btn--outline { border: 0; padding-left: 18px; padding-right: 18px; box-shadow: inset 0 0 0 1px rgba(6,33,80,.18); }
+.vf.is-first .vf__back { display: none; } /* Continue takes the full width on the first step */
+.vf__send, .vf.is-last .vf__next { display: none; }
+.vf.is-last .vf__send { display: inline-flex; }
+.vf__send svg { width: 18px; height: 18px; }
+.vf__send[disabled] { opacity: .7; cursor: progress; }
+.vf__note { margin: 0; font-size: 13px; line-height: 18px; color: #8a94a6; text-align: center; }
+/* severity: four pills, each its own colour once chosen */
+.sev-group { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
+.sev { position: relative; cursor: pointer; }
+.sev input { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+.sev span { display: grid; place-items: center; height: 44px; border-radius: 12px; background: #f6f8fb; box-shadow: inset 0 0 0 1px rgba(6,33,80,.12); font-size: 14px; font-weight: 500; color: #3a4a66; transition: background .2s, box-shadow .2s, color .2s; }
+.sev input:focus-visible + span { outline: 2px solid #2b5cff; outline-offset: 2px; }
+.sev--low input:checked + span { background: #e9f9f0; color: #1a7a48; box-shadow: inset 0 0 0 1.5px #2bb673; }
+.sev--medium input:checked + span { background: #fff6e0; color: #8a5300; box-shadow: inset 0 0 0 1.5px #e3a21a; }
+.sev--high input:checked + span { background: #fff0e6; color: #a8410c; box-shadow: inset 0 0 0 1.5px #ef7a2d; }
+.sev--critical input:checked + span { background: #fdecec; color: #b42323; box-shadow: inset 0 0 0 1.5px #d23b3b; }
+.field.is-bad .sev span { box-shadow: inset 0 0 0 1.5px #d23b3b; }
+/* sent */
+.vf__done { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; padding: 32px; border-radius: 20px; background: #fff; box-shadow: 0 0 0 1px rgba(6,33,80,.08), 0 40px 80px -40px rgba(20,36,107,.35); outline: none; animation: demo-rise .6s cubic-bezier(.16,1,.3,1) both; }
+.vf__done[hidden] { display: none; }
+.vf__done-mark { display: grid; place-items: center; width: 52px; height: 52px; border-radius: 16px; background: radial-gradient(circle at 35% 30%, #8fb0ff, #3b6cf0 55%, #2552d8); color: #fff; box-shadow: inset 0 2px 4px rgba(255,255,255,.4), 0 8px 24px rgba(59,108,240,.4); }
+.vf__done-mark svg { width: 26px; height: 26px; stroke-width: 1.8; }
+.vf__done-title { margin: 8px 0 0; font-size: 22px; font-weight: 500; line-height: 30px; color: var(--ink); }
+.vf__done-body { margin: 0 0 8px; font-size: 15px; line-height: 22px; color: var(--muted); }
+.vf__done-body code { padding: 2px 6px; border-radius: 6px; background: #f1f3f6; font: 13px var(--mono); color: var(--navy); }
+.vf__done .btn { height: 44px; padding-top: 0; padding-bottom: 0; border: 0; box-shadow: inset 0 0 0 1px rgba(6,33,80,.18); }
+
+/* ---------- tablets and phones ---------- */
+@media (max-width: 1100px) {
+  .vr { padding: 0 32px 32px; }
+}
+@media (max-width: 720px) {
+  .vr { padding: 0 16px 24px; }
+  .vr__head { padding: 32px 0 24px; }
+  .vr__title { font-size: 34px; line-height: 42px; }
+  .vf, .vf__done { padding: 20px 16px; }
+  .vf__row { grid-template-columns: minmax(0, 1fr); }
+  .sev-group { grid-template-columns: repeat(2, 1fr); }
+  .vf__steps { display: flex; justify-content: space-between; }
+  .vf__steps li { font-size: 0; gap: 0; } /* numbers only, and the name of the step you're on */
+  .vf__steps li.is-on { font-size: 13px; gap: 8px; }
+  .vr__policy { margin-top: 64px; padding-top: 32px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .vf__step.is-on, .vf__done { animation: none; }
+}
+.vf__note a { color: inherit; text-decoration: underline; text-decoration-color: rgba(6,33,80,.25); text-underline-offset: 3px; }
+.vf__note a:hover { color: var(--navy); text-decoration-color: currentColor; }
+
+/* forced-dark:start: generated from the rules above, only when the browser forces a dark theme (see the forced-dark script in each page head) */
+html.forced-dark .vr svg { fill: none; stroke: currentColor; }
+html.forced-dark .vr__kicker { color: #8db0fb; }
+html.forced-dark .vr__title { color: #e9eef6; }
+html.forced-dark .vr__policy { border-top: 1px solid rgba(175,195,255,0.125); }
+html.forced-dark .vr__policy .vr__policy-title { color: #a4afc2; }
+html.forced-dark .vr__policy code { background: #141e30; color: #e1edff; }
+html.forced-dark .vf { background: #060e1d; box-shadow: 0 0 0 1px rgba(175,195,255,0.1), 0 40px 80px -40px rgba(0,0,0,0.64); }
+html.forced-dark .vf__step { border: 0; }
+html.forced-dark .vf__hint { color: #929caf; }
+html.forced-dark .vf__agree { color: #c3cfe2; }
+html.forced-dark .vf__agree input { accent-color: #e1edff; }
+html.forced-dark .vf__agree a { color: #e1edff; text-decoration: underline; }
+html.forced-dark .vf__steps li { color: #a3abba; }
+html.forced-dark .vf__steps li::before { background: #151f31; color: #929caf; }
+html.forced-dark .vf__steps li.is-on { color: #e9eef6; }
+html.forced-dark .vf__steps li.is-on::before { background: #3b6cf0; color: #ffffff; }
+html.forced-dark .vf__steps li.is-done::before { background: #042316; color: #6fc790; }
+html.forced-dark .vf__bar { background: #151f31; }
+html.forced-dark .vf__bar b { background: #3b6cf0; }
+html.forced-dark .vf__nav .btn--primary { box-shadow: inset 0 1px 0 rgba(255,255,255,0.12); }
+html.forced-dark .vf__nav .btn--outline { border: 0; box-shadow: inset 0 0 0 1px rgba(175,195,255,0.225); }
+html.forced-dark .vf__note { color: #929caf; }
+html.forced-dark .sev span { background: #111a2b; box-shadow: inset 0 0 0 1px rgba(175,195,255,0.15); color: #c3cfe2; }
+html.forced-dark .sev input:focus-visible + span { outline: 2px solid #2b5cff; }
+html.forced-dark .sev--low input:checked + span { background: #042316; color: #6fc790; box-shadow: inset 0 0 0 1.5px #2bb673; }
+html.forced-dark .sev--medium input:checked + span { background: #251a00; color: #e0a362; box-shadow: inset 0 0 0 1.5px #e3a21a; }
+html.forced-dark .sev--high input:checked + span { background: #2e1706; color: #fe8f62; box-shadow: inset 0 0 0 1.5px #ef7a2d; }
+html.forced-dark .sev--critical input:checked + span { background: #301718; color: #fe8b80; box-shadow: inset 0 0 0 1.5px #d23b3b; }
+html.forced-dark .field.is-bad .sev span { box-shadow: inset 0 0 0 1.5px #d23b3b; }
+html.forced-dark .vf__done { background: #060e1d; box-shadow: 0 0 0 1px rgba(175,195,255,0.1), 0 40px 80px -40px rgba(0,0,0,0.64); outline: none; }
+html.forced-dark .vf__done-mark { background: radial-gradient(circle at 35% 30%, #8fb0ff, #3b6cf0 55%, #2552d8); color: #ffffff; box-shadow: inset 0 2px 4px rgba(255,255,255,0.14), 0 8px 24px rgba(59,108,240,.4); }
+html.forced-dark .vf__done-title { color: #e9eef6; }
+html.forced-dark .vf__done-body { color: #b3b8c0; }
+html.forced-dark .vf__done-body code { background: #141e30; color: #e1edff; }
+html.forced-dark .vf__done .btn { border: 0; box-shadow: inset 0 0 0 1px rgba(175,195,255,0.225); }
+html.forced-dark .vf__note a { color: inherit; text-decoration: underline; text-decoration-color: rgba(225,237,255,0.25); }
+html.forced-dark .vf__note a:hover { color: #e1edff; text-decoration-color: currentColor; }
+/* forced-dark:end */

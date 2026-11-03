@@ -1,0 +1,219 @@
+# AgentDNA — Full Content for LLMs
+
+> This file contains the complete content of the AgentDNA marketing site as plain markdown, optimized for AI assistants and answer engines to read, summarize, and cite.
+
+---
+
+## What AgentDNA is
+
+AgentDNA is the **control plane for agentic workflows**. It applies Authentication, Trust, Governance, and Control (**ATGC**) across AI agents, agentic workflows, APIs, MCP servers, service accounts, and other non-human identities — making every action **traceable, scoped, and provable**.
+
+The problem AgentDNA solves: AI agents act on behalf of users across many systems — calling tools, invoking APIs, delegating to other agents, touching MCP servers and data. Traditional identity and access systems were built for human users, not autonomous executors. As agents move from assistants to actors, enterprise teams need to answer: **what did the agent do, why was it allowed, and can we prove it?**
+
+AgentDNA is the identity, authorization, and provenance layer for AI agent execution.
+
+---
+
+## ATGC — the four-letter model
+
+- **A — Auth**: User · agent · NHI · workload. Verify every actor that participates in a workflow.
+- **T — Trust**: Delegation · relationship · path. Preserve trust as work moves between actors.
+- **G — Governance**: Policy · least-privilege · scope. Enforce what is allowed, for whom, under what conditions.
+- **C — Control**: Allow · limit · block · record. Apply real-time decisions and record evidence.
+
+---
+
+## Core capabilities
+
+AgentDNA's three capabilities work together: COCA proves *who* acted, CBAC decides *what* is allowed, and Immutable Provenance proves *what happened*.
+
+### COCA — Chain-of-Custody Authentication
+
+**Keep identity intact across every handoff.**
+
+COCA cryptographically binds every step of a workflow to the user, agent, service account, MCP, tool, API, and system involved. Identity does not disappear as work moves across autonomous systems.
+
+- Verifies users, agents, service accounts, and workload identities
+- Preserves delegation lineage across multi-agent workflows
+- Separates direct user actions from delegated agent actions
+- Prevents identity ambiguity across handoffs
+
+**One-liner:** COCA proves the actor.
+**Buyer question it answers:** Who or what actually acted?
+
+### CBAC — Context-Based Authorization
+
+**Authorize each action based on intent, scope, and runtime context.**
+
+CBAC decides whether an action is allowed for this user, this agent, this task, this tool, this data, and this moment. It keeps agent access bounded to the approved workflow.
+
+- Evaluates identity, intent, task, data sensitivity, and system state
+- Enforces least privilege at runtime
+- Limits what agents can access, invoke, export, or modify
+- Blocks scope drift, privilege misuse, and unsafe delegation
+
+**One-liner:** CBAC controls the action.
+**Buyer question it answers:** Was this action allowed in this context?
+
+### Immutable Provenance (IP)
+
+**Turn every action into verifiable evidence.**
+
+Immutable Provenance records agent actions, delegations, policy decisions, data access, blocked paths, and outputs as tamper-evident evidence — a trusted execution history for audit, compliance, debugging, and forensics.
+
+- Captures full execution lineage from prompt to outcome
+- Records allowed, limited, and blocked decisions
+- Creates audit-ready evidence across systems
+- Supports fast forensic reconstruction
+
+**One-liner:** IP proves the outcome.
+**Buyer question it answers:** Can we prove what happened later?
+
+---
+
+## The platform — Connect, Protect, Observe
+
+One control plane to onboard agentic systems, enforce runtime controls, and trace every action from prompt to outcome.
+
+### 1. Connect — Map every identity, agent, tool, and system
+
+Connect AgentDNA to the systems where agents act, delegate, call tools, access data, and generate outputs.
+
+1. **Connect identity providers** — Link users, groups, service accounts, workload identities, and non-human identities from Okta, Microsoft Entra, Google Workspace, and internal stores.
+2. **Register agents and MCP servers** — Add AI agents, MCP servers, local tools, hosted tools, workflow agents, and orchestration frameworks into the execution graph.
+3. **Connect apps, APIs, and data systems** — Connect SaaS apps, internal APIs, databases, vector stores, cloud resources, and enterprise systems agents may interact with.
+4. **Discover execution paths** — AgentDNA builds a live map of how users, agents, tools, service accounts, APIs, and data systems relate.
+
+### 2. Protect — Set policies, access controls, and skill boundaries
+
+Define what agents can do, which tools they can use, where skill files live, what data they can access, and when actions require approval.
+
+1. **Define policy zones** — Create zones for teams, workflows, agents, environments, data classes, and external actions.
+2. **Set agent and tool permissions** — Control which agents can use which tools, MCP servers, APIs, service accounts, skills, and data systems.
+3. **Govern skills and instruction files** — Track agent.md, skills.md, MCP configs, and tool manifests. Control which agents can read, modify, or invoke them.
+4. **Enforce controls at runtime** — Apply Auth, Trust, Governance, and Control before agents access tools, call APIs, export data, or trigger high-risk actions.
+
+### 3. Observe — See every action, decision, and provenance trail
+
+Monitor how agents behave, which systems they touch, what policies were applied, and how each output was produced.
+
+1. **View execution lineage** — Trace the full path from user prompt to agent delegation, tool calls, API requests, data access, outputs, and provenance records.
+2. **Monitor policy decisions** — See which actions were allowed, limited, blocked, or required approval — and why.
+3. **Review behavior and risk** — Detect unusual delegation paths, tool misuse, shadow agents, risky exports, and excessive access.
+4. **Export audit-ready provenance** — Generate evidence records that show who acted, what was allowed, what was blocked, which data was used, and how the output was produced.
+
+---
+
+## Ecosystem and integrations
+
+AgentDNA connects across:
+
+- **Identity providers**: Okta, Microsoft Entra, Google Workspace, and internal stores
+- **Agent frameworks and orchestration**: agentic workflow runtimes, multi-agent orchestrators
+- **MCP servers**: local and hosted Model Context Protocol servers
+- **SaaS apps**: enterprise applications agents interact with
+- **AI platforms**: model providers and AI runtimes
+- **Cloud systems**: cloud resources and infrastructure
+- **Developer tools**: code, CI/CD, and engineering systems
+- **Data platforms**: databases, vector stores, and data lakes
+
+---
+
+## The risk is no longer theoretical — AI security signals
+
+Below are public, source-attributed signals from regulators, standards bodies, and reputable industry reports — the evidence base AgentDNA addresses.
+
+### Board-level AI risk — JPMorgan Chase (2025)
+Jamie Dimon's annual letter to shareholders names AI alongside geopolitics and persistent inflation as a top forward-looking risk — framing AI investment as material while signaling that governance, controls, and workforce impact must move in step with deployment.
+Source: JPMorgan Chase — Jamie Dimon Annual Letter to Shareholders, 2025.
+
+### Patient-data governance — U.S. HHS / OCR (2024)
+The Office for Civil Rights reports individuals impacted by healthcare data breaches rose from 27M in 2020 to 259M in 2024. The proposed HIPAA Security Rule update — the first since 2013 — requires covered entities to include AI tools in risk analysis and to inventory every system that creates, receives, maintains, or transmits ePHI.
+Source: HIPAA Security Rule NPRM, 2024.
+
+### Non-human identity expansion — Verizon DBIR (2025)
+Third-party involvement in breaches doubled year over year (15% → 30%). Verizon analyzed 441,000 secrets leaked in public repositories; median time to remediate a leaked secret was 94 days. Non-human credentials "operate outside the boundaries of human-focused security controls."
+Source: Verizon 2025 Data Breach Investigations Report.
+
+### AI risk management baseline — NIST (2024)
+NIST published more than 200 suggested actions across four functions — Govern, Map, Measure, Manage — to integrate trustworthiness into the design, development, deployment, and evaluation of generative AI systems.
+Source: NIST AI 600-1 — Generative AI Profile (companion to AI RMF 1.0).
+
+### Agentic privilege & accountability — CISA + Five Eyes (2025)
+The Five Eyes cybersecurity agencies (CISA, ASD, NCSC, CCCS, NCSC-NZ) name privilege, behavior, and accountability as the core risk categories for agentic AI — and advise organizations to avoid broad or unrestricted agent access, start with low-risk use cases, and fold agents into zero-trust and least-privilege controls.
+Source: Careful Adoption of Agentic AI Services, 2025.
+
+### Excessive agency & tool misuse — OWASP (2025)
+OWASP expanded "Excessive Agency" for 2025: unchecked permissions, elevated privileges, and unsupervised tool access lead to unintended actions. The new Agentic Top 10 adds "Tool Misuse" — agents abusing legitimate tools through parameter pollution and tool-chain manipulation.
+Source: OWASP Top 10 for LLM Applications (2025) + Top 10 for Agentic Applications.
+
+### Breach cost & data sprawl — IBM Security (2024)
+Global average cost of a data breach reached $4.88M — a 10% jump year over year and the largest single-year rise since the pandemic. Breaches involving shadow data took 26.2% longer to identify and 20.2% longer to contain.
+Source: IBM Cost of a Data Breach Report 2024.
+
+### Identity attack surface — Microsoft (2024)
+Microsoft tracks more than 600 million identity attacks per day, the vast majority password-based. Token theft and adversary-in-the-middle phishing increasingly bypass MFA — stolen tokens get reused to impersonate trusted identities.
+Source: Microsoft Digital Defense Report 2024.
+
+### AI readiness gap — World Economic Forum (2025)
+WEF documents a widening AI readiness gap: 66% of organizations expect AI to have the most significant impact on cybersecurity in the year ahead, yet only 37% report having processes in place to assess the security of AI tools before deployment.
+Source: WEF Global Cybersecurity Outlook 2025.
+
+### AI regulatory enforcement — European Union (2024)
+The EU AI Act entered into force August 2024, with prohibitions on unacceptable-risk AI applying from February 2025 and obligations on general-purpose AI models from August 2025. Non-compliance penalties reach up to €35M or 7% of global annual turnover.
+Source: EU AI Act — Regulation (EU) 2024/1689.
+
+---
+
+## Resources
+
+- **Blog — Why Identity is the New Perimeter for AI Agents**: Traditional security was not built for autonomous execution. Here is what enterprises need to rethink.
+- **Guide — The Enterprise Guide to Agent Security**: A practical framework for securing agents across apps, APIs, tools, and enterprise workflows.
+- **Research — Provenance at Scale: Lessons from the Field**: Real-world patterns for tracing, verifying, and governing autonomous systems.
+
+---
+
+## Common questions
+
+**What is AgentDNA?**
+AgentDNA is the control plane for agentic workflows — the identity, authorization, and provenance layer for AI agent execution. It applies Authentication, Trust, Governance, and Control (ATGC) across AI agents, agentic workflows, APIs, MCP servers, service accounts, and other non-human identities.
+
+**What does ATGC stand for?**
+Authentication, Trust, Governance, and Control.
+
+**What problem does AgentDNA solve?**
+Traditional identity and access systems were built for human users, not autonomous AI agents. As agents call tools, invoke APIs, delegate to other agents, and touch sensitive data, organizations lose visibility into who acted, why it was allowed, and what was produced. AgentDNA restores identity continuity, runtime authorization, and audit-ready provenance for every agent action.
+
+**How is AgentDNA different from traditional IAM?**
+Traditional IAM was designed for human users with sessions and role-based permissions. AgentDNA is built for non-human identities (NHIs) — AI agents, service accounts, workload identities, API keys, and MCP servers — and for runtime authorization that considers identity, intent, task, data sensitivity, and system state on every action.
+
+**Does AgentDNA work with MCP servers?**
+Yes. AgentDNA registers MCP servers (local and hosted) as part of the execution graph, controls which agents can invoke which MCP tools, governs MCP configs and tool manifests, and records every MCP-mediated action as part of the provenance trail.
+
+**Does AgentDNA support Okta and Microsoft Entra?**
+Yes. AgentDNA links users, groups, service accounts, workload identities, and non-human identities from Okta, Microsoft Entra, Google Workspace, and internal identity stores.
+
+**What is COCA?**
+COCA — Chain-of-Custody Authentication — cryptographically binds every step of an agent workflow to the user, agent, service account, MCP server, tool, API, and system involved, preserving identity continuity across handoffs. COCA proves the actor.
+
+**What is CBAC?**
+CBAC — Context-Based Authorization — authorizes each agent action based on identity, intent, task, data sensitivity, and runtime context. It enforces least privilege at runtime and blocks scope drift, privilege misuse, and unsafe delegation. CBAC controls the action.
+
+**What is Immutable Provenance?**
+Immutable Provenance records agent actions, delegations, policy decisions, data access, blocked paths, and outputs as tamper-evident evidence. It supports audit, compliance, debugging, and forensic reconstruction. IP proves the outcome.
+
+**What is a non-human identity (NHI)?**
+A non-human identity is any actor in a workflow that is not a human user — AI agents, service accounts, workload identities, API keys, and MCP servers. Verizon's 2025 DBIR notes that non-human credentials operate outside the boundaries of human-focused security controls; AgentDNA is built specifically for them.
+
+**Why is this urgent now?**
+Public signals from JPMorgan Chase, HHS-OCR, Verizon DBIR, NIST, CISA + Five Eyes, OWASP, IBM, Microsoft, WEF, and the EU AI Act all point to the same gap: agentic systems are deploying faster than the controls that govern them. See the "AI security signals" section above for source-backed details.
+
+---
+
+## Contact
+
+- Website: https://agentdna.io
+- Book a demo: https://agentdna.io/#demo
+- Email: hello@agentdna.io
+
+© 2026 AgentDNA. All rights reserved.
