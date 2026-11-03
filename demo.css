@@ -126,6 +126,53 @@
 .demo__note a { color: inherit; text-decoration: underline; text-decoration-color: rgba(6,33,80,.25); text-underline-offset: 3px; }
 .demo__note a:hover { color: var(--navy); text-decoration-color: currentColor; }
 
+/* ---------- the thank-you (thanks.js): a drawn check, then what happens next ---------- */
+.demo__done.tk[hidden] { display: none; }
+.demo__done.tk { display: flex; flex-direction: column; align-items: stretch; gap: 0; padding: 8px 0; }
+@media (min-width: 1101px) { .demo__done.tk { min-height: var(--tk-h, 0); justify-content: center; } }
+.tk > * { animation: tk-in .7s cubic-bezier(.16,1,.3,1) backwards; }
+.tk > :nth-child(2) { animation-delay: .08s; } .tk > :nth-child(3) { animation-delay: .16s; } .tk > :nth-child(4) { animation-delay: .24s; }
+.tk > :nth-child(5) { animation-delay: .32s; } .tk > :nth-child(6) { animation-delay: .4s; } .tk > :nth-child(7) { animation-delay: .48s; }
+@keyframes tk-in { from { opacity: 0; transform: translateY(12px); filter: blur(4px); } }
+@keyframes tk-draw { to { stroke-dashoffset: 0; } }
+.tk-title { margin: 24px 0 0; font-size: 24px; font-weight: 500; line-height: 32px; letter-spacing: -.01em; color: var(--ink); text-wrap: balance; }
+.tk-body { margin: 8px 0 0; font-size: 16px; line-height: 24px; color: var(--muted); text-wrap: pretty; }
+.tk-body b, .tk-step span b { font-weight: 500; color: var(--ink); overflow-wrap: anywhere; }
+.tk-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; margin-top: 32px; }
+.tk-actions .btn { height: 48px; padding-top: 0; padding-bottom: 0; }
+
+.tk-check { flex: none; width: 56px; height: 56px; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+.tk-check circle { fill: #eef3ff; stroke: #3b6cf0; stroke-width: 1.5; stroke-dasharray: 139; stroke-dashoffset: 139; transform: rotate(-90deg); transform-origin: center; animation: tk-draw .8s cubic-bezier(.65,0,.35,1) .1s forwards; }
+.tk-check path { stroke: var(--navy); stroke-width: 2.5; stroke-dasharray: 32; stroke-dashoffset: 32; animation: tk-draw .45s cubic-bezier(.65,0,.35,1) .7s forwards; }
+.tk-steps { display: flex; flex-direction: column; margin: 32px 0 0; padding: 0; list-style: none; }
+.tk-step { position: relative; display: grid; grid-template-columns: 24px minmax(0, 1fr); gap: 16px; padding-bottom: 24px; animation: tk-in .7s cubic-bezier(.16,1,.3,1) both; animation-delay: calc(.5s + var(--i) * .18s); }
+.tk-step:last-child { padding-bottom: 0; }
+.tk-step:not(:last-child)::before, .tk-step:not(:last-child)::after { content: ""; position: absolute; left: 11px; top: 28px; bottom: 4px; width: 2px; border-radius: 2px; background: #e6ebf3; }
+.tk-step.is-done::after { background: #3b6cf0; transform: scaleY(0); transform-origin: top; animation: tk-grow .8s cubic-bezier(.65,0,.35,1) 1s forwards; }
+@keyframes tk-grow { to { transform: scaleY(1); } }
+.tk-dot { position: relative; display: grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; background: #fff; box-shadow: inset 0 0 0 1.5px #d5dcea; }
+.tk-dot svg { width: 14px; height: 14px; fill: none; stroke: #fff; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.tk-dot i { width: 8px; height: 8px; border-radius: 50%; background: #d5dcea; }
+.is-done .tk-dot { background: var(--navy); box-shadow: none; }
+.is-next .tk-dot { box-shadow: inset 0 0 0 1.5px #3b6cf0; }
+.is-next .tk-dot i { background: #3b6cf0; }
+.is-next .tk-dot::after { content: ""; position: absolute; inset: 0; border-radius: 50%; box-shadow: 0 0 0 0 rgba(59,108,240,.35); animation: tk-ping 2s cubic-bezier(.16,1,.3,1) 1.6s infinite; }
+@keyframes tk-ping { 0% { box-shadow: 0 0 0 0 rgba(59,108,240,.35); } 100% { box-shadow: 0 0 0 10px rgba(59,108,240,0); } }
+.tk-step > div > b { display: block; font-size: 16px; font-weight: 500; line-height: 24px; color: var(--ink); }
+.tk-step > div > span { display: block; margin-top: 2px; font-size: 14px; line-height: 20px; color: var(--muted); }
+.tk-step:not(.is-done):not(.is-next) > div > b { color: #6b778c; }
+
+@media (prefers-reduced-motion: reduce) {
+  .tk > *, .tk-step { animation: none; }
+  .tk-check circle, .tk-check path { animation: none; stroke-dashoffset: 0; }
+  .tk-step.is-done::after { animation: none; transform: none; }
+  .is-next .tk-dot::after { animation: none; }
+}
+@media (max-width: 720px) {
+  .tk-title { font-size: 20px; line-height: 28px; }
+  .tk-actions .btn { flex: 1 1 auto; }
+}
+
 /* forced-dark:start: generated from the rules above, only when the browser forces a dark theme (see the forced-dark script in each page head) */
 html.forced-dark .demo__card { background: radial-gradient(60% 50% at 85% 0%, rgba(33,40,79,0.45), transparent 70%), radial-gradient(50% 40% at 0% 100%, rgba(26,31,62,0.7), transparent 70%), linear-gradient(180deg, #131c2e, #0d1626 60%, #111b2c); box-shadow: inset 0 0 0 1px rgba(175,195,255,0.075); }
 html.forced-dark .demo__card::before { background: radial-gradient(circle at 1px 1px, rgba(20,36,107,0.09) 1px, transparent 0) 0 0 / 24px 24px; }
@@ -161,4 +208,22 @@ html.forced-dark .demo__list a { color: #e1edff; text-decoration: underline; tex
 html.forced-dark .demo__list a:hover { text-decoration-color: currentColor; }
 html.forced-dark .demo__note a { color: inherit; text-decoration: underline; text-decoration-color: rgba(225,237,255,0.25); }
 html.forced-dark .demo__note a:hover { color: #e1edff; text-decoration-color: currentColor; }
+html.forced-dark .tk-title { color: #e9eef6; }
+html.forced-dark .tk-body { color: #b3b8c0; }
+html.forced-dark .tk-body b, html.forced-dark .tk-step span b { color: #e9eef6; }
+html.forced-dark .tk-check { fill: none; }
+html.forced-dark .tk-check circle { fill: #eef3ff; stroke: #8db0fb; }
+html.forced-dark .tk-check path { stroke: #e1edff; }
+html.forced-dark .tk-step:not(:last-child)::before, html.forced-dark .tk-step:not(:last-child)::after { background: #192334; }
+html.forced-dark .tk-step.is-done::after { background: #3b6cf0; }
+html.forced-dark .tk-dot { background: #060e1d; box-shadow: inset 0 0 0 1.5px #2c3950; }
+html.forced-dark .tk-dot svg { fill: none; stroke: #ffffff; }
+html.forced-dark .tk-dot i { background: #1f2941; }
+html.forced-dark .is-done .tk-dot { background: #3b6cf0; box-shadow: none; }
+html.forced-dark .is-next .tk-dot { box-shadow: inset 0 0 0 1.5px #3b6cf0; }
+html.forced-dark .is-next .tk-dot i { background: #3b6cf0; }
+html.forced-dark .is-next .tk-dot::after { box-shadow: 0 0 0 0 rgba(59,108,240,0.35); }
+html.forced-dark .tk-step > div > b { color: #e9eef6; }
+html.forced-dark .tk-step > div > span { color: #b3b8c0; }
+html.forced-dark .tk-step:not(.is-done):not(.is-next) > div > b { color: #a4afc2; }
 /* forced-dark:end */

@@ -38,6 +38,7 @@
     const note = form.querySelector('.demo__note');
     btn.disabled = true;
     const thanks = () => {
+      if (window.Thanks) return window.Thanks.show(data); // thanks.js: the styled thank-you
       document.getElementById('demoName').textContent = data.firstName ? ', ' + data.firstName.trim() : '';
       document.getElementById('demoEmail').textContent = data.email.trim();
       form.hidden = true;
