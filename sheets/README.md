@@ -29,3 +29,5 @@ This keeps the same URL. A *New deployment* gives a new URL, which would then ha
 - The URL is public, as any form endpoint on a static site is. Anyone who finds it can add rows, so look out for spam.
 - The browser can't read the script's reply (no-cors). The form shows an error only when the request fails to send.
   If rows stop appearing, check **Executions** in Apps Script.
+- "You do not have permission to access the requested document" in Executions means the deployment can't open the
+  sheet: set **Execute as: Me** (the sheet owner), run `testForm` once to authorize, then deploy a **New version**.
