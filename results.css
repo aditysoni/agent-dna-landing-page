@@ -52,8 +52,6 @@
   .rs__head, .rs__row li { transition: none; }
 }
 
-/* Samsung Internet's dark mode darkens backgrounds and lightens text, and the page can't detect it; a gradient clipped to text counts as a background and turns dark navy on dark, so Samsung gets a plain text colour */
-html.ua-samsung .rs__fig { background: none; color: #3b6cf0; -webkit-text-fill-color: #3b6cf0; }
 /* forced-dark:start: generated from the rules above, only when the browser forces a dark theme (see the forced-dark script in each page head) */
 html.forced-dark .rs { --rs-ink: #e9effe; --rs-muted: #a4afc2; --rs-line: #28354c; --rs-blue: #8ab0fc; color: #e9effe; }
 html.forced-dark .rs__row li + li { border-left: 1px solid #28354c; }
