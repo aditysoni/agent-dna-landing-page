@@ -39,7 +39,7 @@
 .dh.js .dh__headline > span { white-space: nowrap; }
 .dh__aside { grid-area: aside; }
 /* the offer: 16 / 24; the buttons 48 high (the outline drawn inside, so both match) at their usual widths */
-.dh .hero__sub { font-size: 16px; line-height: 24px; }
+.dh .hero__sub { font-size: 17px; line-height: 26px; text-wrap: pretty; }
 .dh .hero__ctas { margin-top: 24px; }
 .dh .hero__ctas .btn { height: 48px; padding-top: 0; padding-bottom: 0; }
 /* no drop shadow under the primary, so both buttons show the same 48px edge */
@@ -50,7 +50,7 @@
 .dh__band { grid-area: band; position: relative; z-index: 1; min-height: clamp(200px, 28vh, 360px); }
 
 /* 1 · Showcase: headline left over two rows, pill and offer right, the helix across the bottom */
-.dh[data-hlayout="showcase"] { grid-template-columns: minmax(0, 1fr) minmax(320px, 440px); grid-template-rows: auto auto minmax(0, 1fr); grid-template-areas: "title eyebrow" "title aside" "band band"; column-gap: 96px; }
+.dh[data-hlayout="showcase"] { grid-template-columns: minmax(0, 1fr) 340px; grid-template-rows: auto auto minmax(0, 1fr); grid-template-areas: "title eyebrow" "title aside" "band band"; column-gap: 96px; }
 .dh[data-hlayout="showcase"] .dh__aside { margin-top: 16px; }
 
 /* 2 · Centered: one column down the middle (headline, offer, buttons; no pill), the helix below */
