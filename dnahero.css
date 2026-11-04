@@ -50,8 +50,14 @@
 .dh__band { grid-area: band; position: relative; z-index: 1; min-height: clamp(200px, 28vh, 360px); }
 
 /* 1 · Showcase: headline left over two rows, pill and offer right, the helix across the bottom */
-.dh[data-hlayout="showcase"] { grid-template-columns: minmax(0, 1fr) 340px; grid-template-rows: auto auto minmax(0, 1fr); grid-template-areas: "title eyebrow" "title aside" "band band"; column-gap: 96px; }
+.dh[data-hlayout="showcase"] { grid-template-columns: minmax(0, 1fr) fit-content(440px); grid-template-rows: auto auto minmax(0, 1fr); grid-template-areas: "title eyebrow" "title aside" "band band"; column-gap: 96px; }
 .dh[data-hlayout="showcase"] .dh__aside { margin-top: 16px; }
+/* side by side (above 1100px): the pill, offer and button sit flush right against the card edge */
+@media (min-width: 1101px) {
+  .dh[data-hlayout="showcase"] .eyebrow { justify-self: end; }
+  .dh[data-hlayout="showcase"] .dh__aside { text-align: right; }
+  .dh[data-hlayout="showcase"] .hero__ctas { justify-content: flex-end; }
+}
 
 /* 2 · Centered: one column down the middle (headline, offer, buttons; no pill), the helix below */
 .dh[data-hlayout="centered"] { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto auto minmax(0, 1fr); grid-template-areas: "title" "aside" "band"; justify-items: center; text-align: center; }
